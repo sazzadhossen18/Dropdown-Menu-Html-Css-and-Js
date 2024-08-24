@@ -1,0 +1,118 @@
+<div class="bottom-header">
+<nav>
+
+ <ul>
+
+  {%- for link in section.settings.menu.links -%}
+    <li><a href="{{ link.url | escape }}">  {{ link.title | escape }}</a>
+ {%- if childlink.links != blank -%}
+       <ul>
+      {%- for childlink in link.links -%}
+        <li><a href="{{ childlink.url }}"> {{ childlink.title | escape }}</a></li>
+    {%- endfor -%}
+      </ul>
+
+      {%- endif -%}
+    
+    </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+</div>
+
+<style>
+.bottom-header {
+    text-align: center;
+    background: #000;
+}
+
+.bottom-header ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background: #000;
+  position: relative;
+}
+
+.bottom-header ul li {
+  display: inline-block;
+}
+
+.bottom-header ul li a {
+  text-decoration: none !important;
+  padding: 15px;
+  display: block;
+  color:#fff;
+}
+
+.bottom-header ul li a:hover {
+text-decoration:underline!important;
+}
+
+.bottom-header ul ul {
+    position: absolute;
+    background: #000;
+    display: none;
+    width: 130px;
+}
+
+.bottom-header ul ul:after {
+    content: '';
+    background: #000;
+    width: 200vw;
+    position: absolute;
+    top: 0;
+    left: -50%;
+    margin-left: -50vw;
+    z-index: -1;
+    opacity: 1;
+    height: 100%;
+    margin-right: -50vw;
+}
+
+
+  
+.bottom-header ul li ul li a {
+    text-decoration: none !important;
+    display: block;
+    color: #fff;
+    padding: 1px;
+}
+.bottom-header ul ul li{
+  display: block;
+   background: #000;
+}
+
+.bottom-header ul li:hover ul{
+  display: block;
+}
+
+@media(max-width: 768px){
+ .bottom-header{
+   display:none;
+ }
+  
+}
+</style>
+
+<script>
+  $('nav div').click(function(){
+  $('ul').slideToggle();
+  $('ul ul').css('display', 'none');
+});
+
+$('ul li').click(function(){
+  $('ul ul').slideUp();
+  $(this).find('ul').slideToggle();
+});
+
+//slideToggle sets the display to none (inline - with the style tag), once the height of the element is 0.
+//if the window is resized from mobile to desktop, the element will not appear.
+
+$(window).resize(function(){
+  if($(window).width() > 768){
+    $('ul').removeAtrr('style');
+  }
+});
+</script>
